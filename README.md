@@ -46,6 +46,5 @@ Para actualizar un producto ,se debe enviar un objeto newProduct en el body.Ej :
 "nombre":"Lapiz 02",<br/>
 "precio": "23"<br/>
 
-    }<br/>
-
+    }
 }
