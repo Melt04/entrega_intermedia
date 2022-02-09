@@ -13,6 +13,9 @@ class Cart {
   deleteCart(id) {
     const index = this.carts.findIndex((cart) => id == cart.id);
     if (index > -1) {
+      this.carts[index].products.map((product) => {
+        products.addStock(product.quantity, product.id);
+      });
       this.carts.splice(index, 1);
       return true;
     }

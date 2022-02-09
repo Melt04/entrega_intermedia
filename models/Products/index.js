@@ -25,6 +25,28 @@ class Products {
     }
     return false;
   }
+  addStock(num, id) {
+    console.log("Dede ad ", num, id);
+    const index = this.products.findIndex((product) => id == product.id);
+    if (index > -1) {
+      this.products[index].stock = this.products[index].stock + num;
+      return true;
+    }
+    return false;
+  }
+  removeStock(num, id) {
+    const index = this.products.findIndex((product) => id == product.id);
+    if (index > -1) {
+      if (this.products[index].stock >= num) {
+        console.log(`stock ${this.products[index].stock}`);
+        this.products[index].stock = this.products[index].stock - num;
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
+
   deleteProductById(id) {
     const index = this.products.findIndex((product) => id == product.id);
     if (index > -1) {

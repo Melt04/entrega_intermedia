@@ -10,7 +10,6 @@ createNewCart = (req, res, next) => {
 };
 deleteCartById = (req, res, next) => {
   const { id } = req.params;
-  console.log(`asdsa ${id}`);
   if (cart.deleteCart(id)) {
     return res.send({ message: "Borrado con exito" });
   }
@@ -22,8 +21,10 @@ addProductToCart = (req, res, next) => {
   const { id } = req.params;
   const { idProd } = req.body;
   const existProduct = products.getProductById(idProd);
-  if (existProduct) {
+  console.log("antes ", existProduct.stock);
+  if (existProduct && existProduct.stock > 0) {
     if (cart.addProductToCart(id, idProd)) {
+      products.removeStock(1, idProd);
       return res.send({ message: "ok" });
     }
   }
@@ -43,6 +44,7 @@ deleteProductsFromCart = (req, res, next) => {
   const { id } = req.params;
   const { idProd } = req.params;
   if (cart.deleteProductFromCart(id, idProd)) {
+    products.addStock(1, idProd);
     return res.send({ message: "ok" });
   }
   const error = new Error("No se pudo borrar el producto del carrito");
