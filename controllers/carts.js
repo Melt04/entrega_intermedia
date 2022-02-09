@@ -20,7 +20,7 @@ deleteCartById = (req, res, next) => {
 
 addProductToCart = (req, res, next) => {
   const { id } = req.params;
-  const { idProd } = req.params;
+  const { idProd } = req.body;
   const existProduct = products.getProductById(idProd);
   if (existProduct) {
     if (cart.addProductToCart(id, idProd)) {
