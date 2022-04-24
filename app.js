@@ -4,13 +4,6 @@ const PORT = process.env.PORT || 8080
 const { router: routerCart } = require('./src/routes/cart')
 const { router: routerProduct } = require('./src/routes/products')
 const { fakeUserMiddleware } = require('./src/middleware/index')
-const ProductDaoFile = require('./src/daos/producto/ProductDaoFile')
-
-;(async () => {
-  const newfile = new ProductDaoFile()
-  const data = await newfile.getAll()
-  console.log(data)
-})()
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
