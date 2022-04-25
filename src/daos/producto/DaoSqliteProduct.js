@@ -2,6 +2,7 @@ const SqliteContainer = require("../../contenedor/Sqlite3Container");
 class DaoSqliteProduct extends SqliteContainer {
     constructor() {
         super('product')
+        this.connect()
 
     }
     async connect() {

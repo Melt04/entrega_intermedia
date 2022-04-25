@@ -2,7 +2,7 @@
 
 const express = require('express')
 const app = express()
-const { configServer } = require('./helpers')
+const { configServer } = require('./config/initServer').exp
 configServer()
 const { router: routerCart } = require('./src/routes/cart')
 const { router: routerProduct } = require('./src/routes/products')

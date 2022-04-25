@@ -2,10 +2,10 @@ const SqliteContainer = require("../../contenedor/Sqlite3Container");
 class DaoSqliteCart extends SqliteContainer {
     constructor() {
         super('cart')
+        this.connect()
 
     }
     async connect() {
-
         try {
             const exist = await this.db.schema.hasTable(this.table)
             if (!exist) {

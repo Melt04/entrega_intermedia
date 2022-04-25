@@ -1,19 +1,8 @@
-const knex = require('knex')
-const sqlite3Options = {
-  client: 'sqlite3',
-  connection: {
-    filename: './db/mysqlite3/mydq.sqlite',
-  },
-  useNullAsDefault: true,
-}
-
+const { knexInstance } = require('../../config/initServer').exp
 class SqliteContainer {
   constructor(table) {
     this.table = table
-    this.db = knex(sqlite3Options)
-
-  }
-  async connect() {
+    this.db = knexInstance
   }
 
   async getAll() {

@@ -1,1 +1,0 @@
-{ "persistencia": "mongo", "puerto": "3000", "urlMongo": "mongodb://localhost:27017/ecommerce" }

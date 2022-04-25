@@ -3,7 +3,7 @@ const repository = require('../../daos/producto/index')
 class Products {
   constructor() {
     this.repository = repository
-    this.repository.connect()
+
   }
   async getAllProducts() {
     return this.repository.getAll()
@@ -40,16 +40,7 @@ class Products {
     }
     this.repository.updateById(id, { stock: stock - num })
 
-    /* const index = this.products.findIndex((product) => id == product.id)
-    if (index > -1) {
-      if (this.products[index].stock >= num) {
-        console.log(`stock ${this.products[index].stock}`)
-        this.products[index].stock = this.products[index].stock - num
-        return true
-      }
-      return false
-    }
-    return false */
+
   }
 
   async deleteProductById(id) {

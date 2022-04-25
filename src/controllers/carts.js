@@ -4,7 +4,6 @@ const Cart = require('../models/Cart/index')
 createNewCart = async (_, res, next) => {
   try {
     const datos = await Cart.createNewCart({ products: JSON.stringify([]) })
-    console.log(datos)
     return res.json({ message: 'Creado con exito' });
   } catch (e) {
     next(new Error(e.message))
@@ -61,11 +60,10 @@ deleteProductsFromCart = async (req, res, next) => {
     return res.send({ message: 'ok' })
 
   } catch (e) {
-    console.log(e)
+
     const error = new Error('No se pudo borrar el producto del carrito')
     next(error)
   }
-
 
 }
 module.exports = {

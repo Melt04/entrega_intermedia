@@ -10,7 +10,7 @@ isAdmin = (req, res, next) => {
   error.status = 401
   next(error)
 }
-const fieldsProduct = ['nombre', 'desc', 'codigo', 'foto', 'precio', 'stock']
+const fieldsProduct = ['name', 'desc', 'code', 'urlPhoto', 'price', 'stock']
 const FIELD_LENGTH = fieldsProduct.length
 validateId = (req, res, next) => {
   const { id } = req.params

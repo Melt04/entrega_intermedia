@@ -2,7 +2,7 @@
 const Product = require('../models/Products/index')
 
 getAllProducts = async (req, res, next) => {
-  console.log(Product)
+
   try {
     const datos = await Product.getAllProducts()
     return res.json(datos);
@@ -61,7 +61,6 @@ updateProductById = async (req, res, next) => {
 };
 
 module.exports = {
-
   getAllProducts,
   getProductById,
   createProduct,

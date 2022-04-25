@@ -4,7 +4,7 @@ class MongoContainer {
   constructor(model) {
     this.model = model
   }
-  async connect() {
+  static async connect() {
     try {
       await mongoose.connect(process.env.urlMongo)
       return true

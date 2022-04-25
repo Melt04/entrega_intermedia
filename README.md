@@ -31,6 +31,7 @@ El proyecto tiene un arhivico config.json en el directorio raiz el cual se utili
 - Setear el puerto
 - Setear la persistencia
 - Setear la url de mongo
+- Setear el ambiente: prod o dev
 
 La persistencia tiene 3 valores
 

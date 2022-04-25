@@ -6,7 +6,7 @@ const repository = require('../../daos/carrito/index')
 class Cart {
   constructor() {
     this.repository = repository
-    this.repository.connect()
+
   }
   async createNewCart(data) {
     return this.repository.insert(data)
@@ -24,7 +24,7 @@ class Cart {
     if (cart.length > 0) {
       products = JSON.parse(cart[0].products)
     } else {
-      console.log(cart)
+
       products = JSON.parse(cart.products)
     }
     return products
@@ -39,7 +39,7 @@ class Cart {
       }
       const prodCart = await this.getContentOfCart(id)
       const findIndex = prodCart.findIndex((element) => element.id == idProduct)
-      console.log(findIndex)
+
       if (findIndex > -1) {
         prodCart[findIndex].q++
       } else {
@@ -56,9 +56,9 @@ class Cart {
   async deleteProductFromCart(id, idProduct) {
     try {
       const prodCart = await this.getContentOfCart(id)
-      console.log(prodCart)
+
       const newProductCart = prodCart.filter(element => {
-        console.log(element)
+
         if (element !== null) {
           return element.id != idProduct
         }
