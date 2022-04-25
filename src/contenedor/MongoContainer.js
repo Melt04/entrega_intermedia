@@ -6,7 +6,7 @@ class MongoContainer {
   }
   async connect() {
     try {
-      await mongoose.connect('mongodb://localhost:27017/newTest_01')
+      await mongoose.connect(process.env.urlMongo)
       return true
     } catch (e) {
       throw new Error(e.message)
@@ -31,6 +31,7 @@ class MongoContainer {
   async getById(id) {
     try {
       const data = await this.model.findById(id)
+
       return data
     } catch (e) {
       throw new Error(e.message)
@@ -42,6 +43,14 @@ class MongoContainer {
     } catch (e) {
       throw new Error(e.message)
     }
+  }
+  async updateById(id, newData) {
+    try {
+      const data = await this.model.findByIdAndUpdate(id, newData, { upsert: true })
+    } catch (e) {
+      throw new Error(e.message)
+    }
+
   }
   async deleteAll() {
     try {

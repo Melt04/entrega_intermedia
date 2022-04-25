@@ -1,38 +1,34 @@
 const { getMaxId } = require('../../../helpers/index')
+const repository = require('../../daos/producto/index')
 class Products {
   constructor() {
-    this.products = []
+    this.repository = repository
+    this.repository.connect()
   }
-  getAllProducts() {
-    console.log(this.products)
-    return this.products
+  async getAllProducts() {
+    return this.repository.getAll()
+
   }
-  getProductById(id) {
-    return this.products.find((product) => {
-      return product.id == id
-    })
+  async getProductById(id) {
+    return this.repository.getById(id)
   }
-  addNewProduct(product) {
-    this.products.push(product)
-    return true
+  createProduct(product) {
+    return this.repository.insert(product)
   }
   updateProductById(id, newProduct) {
-    const index = this.products.findIndex((product) => id == product.id)
-    if (index > -1) {
-      const currentProduct = this.products[index]
-      this.products[index] = { ...currentProduct, ...newProduct }
-      return true
-    }
-    return false
+    return this.repository.updateById(id, newProduct)
   }
-  addStock(num, id) {
-    console.log('Dede ad ', num, id)
-    const index = this.products.findIndex((product) => id == product.id)
-    if (index > -1) {
-      this.products[index].stock = this.products[index].stock + num
-      return true
+  async addStock(num, id) {
+    let stock
+    const product = await this.repository.getById(id)
+    if (product.length > 0) {
+      stock = product[0].stock
+    } else {
+      stock = product.stock
     }
-    return false
+    this.repository.updateById(id, { stock: stock + num })
+    return
+
   }
   removeStock(num, id) {
     const index = this.products.findIndex((product) => id == product.id)
@@ -47,17 +43,9 @@ class Products {
     return false
   }
 
-  deleteProductById(id) {
-    const index = this.products.findIndex((product) => id == product.id)
-    if (index > -1) {
-      this.products.splice(index, 1)
-      return true
-    }
-    return false
-  }
-  getId() {
-    return getMaxId(this.products)
+  async deleteProductById(id) {
+    return this.repository.deleteById(id)
+
   }
 }
-
 module.exports = new Products()

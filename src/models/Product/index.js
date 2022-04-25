@@ -1,14 +1,16 @@
 class Product {
-  constructor({ id, nombre, desc, codigo, foto, precio, stock }) {
+  constructor({ id, name, desc, codigo, urlPhoto, price, stock }) {
     this.id = id
-    this.nombre = nombre
-    this.timestamp = new Date().toISOString()
+    this.name = name
+    this.date = new Date().toISOString()
     this.desc = desc
-    this.codigo = codigo
-    this.foto = foto
-    this.precio = precio
+    this.code = code
+    this.urlPhoto = urlPhoto
+    this.price = price
     this.stock = stock
   }
 }
+
+
 
 module.exports = Product

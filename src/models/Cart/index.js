@@ -1,58 +1,64 @@
 const { products } = require('../../controllers/products')
 const { getMaxId } = require('../../../helpers/index')
+const Products = require('../Products/index')
+const repository = require('../../daos/carrito/index')
+
+
 class Cart {
   constructor() {
-    this.carts = []
+    this.repository = repository
+    this.repository.connect()
   }
-  createNewCart() {
-    const id = getMaxId(this.carts)
-    const products = []
-    this.carts.push({ id, products })
-    return id
+  async createNewCart(data) {
+    return this.repository.insert(data)
+
   }
-  deleteCart(id) {
-    const index = this.carts.findIndex((cart) => id == cart.id)
-    if (index > -1) {
-      this.carts[index].products.map((product) => {
-        products.addStock(product.quantity, product.id)
-      })
-      this.carts.splice(index, 1)
-      return true
+  async getAllCarts() {
+    return this.repository.getAll()
+  }
+  async deleteCartById(id) {
+    return this.repository.deleteById(id)
+  }
+  async getContentOfCart(id) {
+    let products;
+    const cart = await this.repository.getById(id)
+    if (cart.length > 0) {
+      products = JSON.parse(cart[0].products)
+    } else {
+      console.log(cart)
+      products = JSON.parse(cart.products)
     }
-    return false
+    return products
+
   }
-  getContentOfCart(id) {
-    const index = this.carts.findIndex((cart) => id == cart.id)
-    if (index > -1) {
-      return this.carts[index].products
+  async addProductToCart(id, idProduct) {
+    try {
+      const prod = await Products.getProductById(idProduct)
+      const prodCart = await this.getContentOfCart(id)
+      prodCart.push(prod)
+      return this.repository.updateById(id, { products: JSON.stringify(prodCart) })
+    } catch (e) {
+
+      throw new Error(e.message)
     }
-    return false
+
   }
-  addProductToCart(id, idProduct) {
-    const index = this.carts.findIndex((cart) => id == cart.id)
-    if (index > -1) {
-      const productIndex = this.carts[index].products.findIndex((product) => {
-        return product.id == idProduct
-      })
-      if (productIndex > -1) {
-        this.carts[index].products[productIndex].quantity++
-        return true
-      }
-      this.carts[index].products.push({ id: idProduct, quantity: 1 })
-      return true
+  async deleteProductFromCart(id, idProduct) {
+    try {
+      const prodCart = await this.getContentOfCart(id)
+      console.log(prodCart)
+      const newProductCart = prodCart.filter(element => {
+        console.log(element)
+        if (element !== null) {
+          return element.id != idProduct
+        }
+      });
+      console.log(newProductCart)
+
+      return this.repository.updateById(id, { products: JSON.stringify(newProductCart) })
+    } catch (e) {
+      throw new Error(e.message)
     }
-    return false
-  }
-  deleteProductFromCart(id, idProduct) {
-    const index = this.carts.findIndex((cart) => id == cart.id)
-    if (index > -1) {
-      const productIndex = this.carts[index].products.findIndex((product) => product.id == idProduct)
-      if (productIndex > -1) {
-        this.carts[index].products.splice(productIndex, 1)
-        return true
-      }
-    }
-    return false
   }
 }
 module.exports = new Cart()
