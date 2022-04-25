@@ -1,5 +1,4 @@
-const { products } = require('../../controllers/products')
-const { getMaxId } = require('../../../helpers/index')
+
 const Products = require('../Products/index')
 const repository = require('../../daos/carrito/index')
 
@@ -53,8 +52,6 @@ class Cart {
           return element.id != idProduct
         }
       });
-      console.log(newProductCart)
-
       return this.repository.updateById(id, { products: JSON.stringify(newProductCart) })
     } catch (e) {
       throw new Error(e.message)

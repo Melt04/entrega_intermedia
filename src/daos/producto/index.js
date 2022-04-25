@@ -6,7 +6,11 @@ const persistencia = process.env.persistencia
 if (persistencia === 'mongo') {
     module.exports = new DaoMongoProduct()
 } else {
-    if (persistencia === 'sqlite')
+    if (persistencia === 'sqlite') {
+
         module.exports = new DaoSqliteProduct()
+    } else {
+        module.exports = new DaoFileProduct()
+    }
 
 }

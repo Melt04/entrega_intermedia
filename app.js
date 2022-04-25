@@ -28,9 +28,4 @@ app.use((err, req, res, next) => {
 })
 app.listen(PORT, async () => {
   console.log(`Escuchando en puerto ${PORT}`)
-  try {
-
-
-  } catch (e) { }
-
 })

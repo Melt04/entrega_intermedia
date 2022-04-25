@@ -1,9 +1,12 @@
 const fs = require('fs/promises')
+const { getMaxId } = require('../../helpers/index')
+
 
 class FileContainer {
   constructor(fileRoute) {
     this.fileRoute = fileRoute
   }
+  async connect() { }
   async getAll() {
     try {
       const data = await fs.readFile(this.fileRoute)
@@ -20,7 +23,8 @@ class FileContainer {
   async insert(data) {
     try {
       const allData = await this.getAll()
-      allData.push(data)
+      const id = getMaxId(allData)
+      allData.push({ ...data, id })
       const insertedData = await fs.writeFile(this.fileRoute, JSON.stringify(allData))
       return insertedData
     } catch (e) {
@@ -31,7 +35,8 @@ class FileContainer {
     try {
       const allData = await this.getAll()
       if (allData.length == 0) return undefined
-      const findData = allData.find((data) => data.id === id)
+      const findData = allData.find((data) => data.id == id)
+
       return findData
     } catch (e) {
       throw new Error(e.message)
@@ -41,11 +46,29 @@ class FileContainer {
     try {
       const allData = await this.getAll()
       if (allData.length == 0) return undefined
-      const newData = allData.filter((data) => data.id !== id)
-      return newData
+      const newData = allData.filter((data) => data.id != id)
+      return await fs.writeFile(this.fileRoute, JSON.stringify(newData))
+
+
     } catch (e) {
       throw new Error(e.message)
     }
+  }
+  async updateById(id, newData) {
+    try {
+      const data = await this.getAll()
+      const newProduct = data.map(element => {
+        if (element.id == id) {
+          element = { ...element, ...newData }
+        } return element
+      })
+
+      return await fs.writeFile(this.fileRoute, JSON.stringify(newProduct))
+
+    } catch (e) {
+      throw new Error(e.message)
+    }
+
   }
   async deleteAll() {
     try {

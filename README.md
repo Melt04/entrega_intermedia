@@ -24,6 +24,20 @@ Construccion de una api rest para productos
 - POST /id/products/ : Guarda el producto con el carrito con id
 - DELETE /id/products/idProd : Borra el producto con idprod del carrito con id.
 
+# Configuraciones
+
+El proyecto tiene un arhivico config.json en el directorio raiz el cual se utiliza para lo siguiente:
+
+- Setear el puerto
+- Setear la persistencia
+- Setear la url de mongo
+
+La persistencia tiene 3 valores
+
+- mongo para utilizar una bd no relacion
+- sqlite para utilizar una bd relacion
+- "" vacio para utilizar un archivo
+
 # Consideraciones
 
 Para crear un nuevo producto, se debe enviar un objeto product en el body.Ej :

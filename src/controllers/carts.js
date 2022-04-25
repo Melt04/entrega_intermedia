@@ -1,9 +1,6 @@
-const { json } = require('express/lib/response')
-const cart = require('../daos/carrito/index')
-const products = require('../daos/producto/index')
+
 const Cart = require('../models/Cart/index')
 
-products.connect()
 createNewCart = async (_, res, next) => {
   try {
     const datos = await Cart.createNewCart({ products: JSON.stringify([]) })

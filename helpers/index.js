@@ -1,5 +1,6 @@
 const config = require('../config.json')
 getMaxId = (array) => {
+  console.log(array.length)
   const maxId = array.length > 0 ? array[array.length - 1].id + 1 : 0;
   return maxId;
 };
