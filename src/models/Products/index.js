@@ -30,8 +30,17 @@ class Products {
     return
 
   }
-  removeStock(num, id) {
-    const index = this.products.findIndex((product) => id == product.id)
+  async removeStock(num, id) {
+    let stock
+    const product = await this.repository.getById(id)
+    if (product.length > 0) {
+      stock = product[0].stock
+    } else {
+      stock = product.stock
+    }
+    this.repository.updateById(id, { stock: stock - num })
+
+    /* const index = this.products.findIndex((product) => id == product.id)
     if (index > -1) {
       if (this.products[index].stock >= num) {
         console.log(`stock ${this.products[index].stock}`)
@@ -40,7 +49,7 @@ class Products {
       }
       return false
     }
-    return false
+    return false */
   }
 
   async deleteProductById(id) {

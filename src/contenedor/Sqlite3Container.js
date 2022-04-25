@@ -25,7 +25,6 @@ class SqliteContainer {
 
     }
   }
-
   async insert(data) {
     try {
       const insertedData = await this.db(this.table).insert(data)

@@ -33,8 +33,19 @@ class Cart {
   async addProductToCart(id, idProduct) {
     try {
       const prod = await Products.getProductById(idProduct)
+      const { id: idProd, name, desc, price, stock } = prod
+      if (stock < 0) {
+        throw new Error("No hay suficientes productos")
+      }
       const prodCart = await this.getContentOfCart(id)
-      prodCart.push(prod)
+      const findIndex = prodCart.findIndex((element) => element.id == idProduct)
+      console.log(findIndex)
+      if (findIndex > -1) {
+        prodCart[findIndex].q++
+      } else {
+        prodCart.push({ id: idProd, name, desc, price, q: 1 })
+      }
+      await Products.removeStock(1, idProduct)
       return this.repository.updateById(id, { products: JSON.stringify(prodCart) })
     } catch (e) {
 
