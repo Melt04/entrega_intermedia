@@ -36,6 +36,14 @@ deleteCartById = async (req, res, next) => {
       subject: `Nuevo Pedido de ${req.user.username}`,
       html: formatProductsToHtml(cartProducts)
     }
+    client.messages
+      .create({
+        body: formatProductsToHtml(cartProducts),
+        from: 'whatsapp:+14155238886',
+        to: 'whatsapp:+5492235917701'
+      })
+      .then(message => console.log(message.sid))
+      .done()
 
     try {
       const message = await client.messages.create({
