@@ -1,0 +1,104 @@
+.banner-user{
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+.modal {
+  height: 100%;
+}
+.modal-dialog{
+  height: auto;
+}
+.spinner-border{
+  font-size: 20rem;
+}
+.modal-content{
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.profileSection{
+  text-align: center;
+  
+}
+nav{
+  margin-bottom: 4%;
+}
+
+.banner-user button{
+  background-color: aqua;
+  height: 100%;
+  
+}
+.avatar{
+  max-width: 120px;
+  border-radius: 20%;
+}
+form {
+  margin: 4% auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  border: 2px solid black;
+}
+.formLogout{
+  border:  none;
+  align-items: center;
+}
+input {
+  margin: 1%;
+}
+
+img {
+  max-width: 20px;
+}
+
+table {
+  margin: 0 auto;
+  max-width: 50%;
+}
+.messageCenter__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.message_main_form {
+  width: 30%;
+   display: flex;
+  flex-direction: column;
+}
+.inputuser_main_form{
+  display: flex;
+  flex-direction: column;
+}
+h2 {
+  color: blue;
+}
+.message_user {
+  color: blue;
+  font-weight: 900;
+}
+.message_date {
+  color: brown;
+}
+.message_mensaje {
+  color: green;
+  font-family: cursive;
+}

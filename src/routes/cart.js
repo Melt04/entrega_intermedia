@@ -7,13 +7,15 @@ const {
   getProductsFromCart,
   deleteProductsFromCart,
   addProductToCart,
-  getAllCarts
+  getAllCarts,
+  testCart
 } = require('../controllers/carts')
 
 router.post('/', createNewCart)
-router.delete('/:id', deleteCartById)
-router.get('/:id/products', getProductsFromCart)
-router.post('/:id/products', addProductToCart)
-router.delete('/:id/products/:idProd', deleteProductsFromCart)
+router.delete('/checkout', deleteCartById)
+router.get('/products', getProductsFromCart)
+router.post('/products', addProductToCart)
+router.delete('/products/:idProd', deleteProductsFromCart)
 router.get('/', getAllCarts)
+
 module.exports = { router }

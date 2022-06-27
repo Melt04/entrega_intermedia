@@ -1,18 +1,19 @@
 const mongoose = require('mongoose')
 
 class MongoContainer {
-  constructor(model) {
+  constructor (model) {
     this.model = model
   }
-  static async connect() {
+  static async connect () {
     try {
+      console.log('connene')
       await mongoose.connect(process.env.urlMongo)
       return true
     } catch (e) {
       throw new Error(e.message)
     }
   }
-  async getAll() {
+  async getAll () {
     try {
       const data = this.model.find({})
       return data
@@ -20,7 +21,7 @@ class MongoContainer {
       throw new Error(e.message)
     }
   }
-  async insert(data) {
+  async insert (data) {
     try {
       await this.model.create(data)
       return
@@ -28,7 +29,7 @@ class MongoContainer {
       throw new Error(e.message)
     }
   }
-  async getById(id) {
+  async getById (id) {
     try {
       const data = await this.model.findById(id)
 
@@ -37,22 +38,32 @@ class MongoContainer {
       throw new Error(e.message)
     }
   }
-  async deleteById(id) {
+  async deleteById (id) {
     try {
       const data = await this.model.findByIdAndDelete(id)
     } catch (e) {
       throw new Error(e.message)
     }
   }
-  async updateById(id, newData) {
+  async updateById (id, newData) {
     try {
-      const data = await this.model.findByIdAndUpdate(id, newData, { upsert: true })
+      const data = await this.model.findByIdAndUpdate(id, newData, {
+        upsert: true
+      })
     } catch (e) {
       throw new Error(e.message)
     }
-
   }
-  async deleteAll() {
+  async getByUserId (userId) {
+    try {
+      const data = await this.model.find({ userId })
+
+      return data
+    } catch (e) {
+      throw new Error(e.message)
+    }
+  }
+  async deleteAll () {
     try {
       await this.model.deleteMany({})
     } catch (e) {

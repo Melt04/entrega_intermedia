@@ -1,0 +1,44 @@
+<div>
+  
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Titulo</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Desc</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Accion</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cartsProducts}}
+      <tr>
+
+        <td>{{this.name}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.desc}}</td>
+        <td>{{this.q}}</td>
+
+        <td><button id="{{this.id}}" onclick="deleteProductById({{this.id}})" class="btn btn-danger">Remove</button></td>
+
+
+      </tr>
+      {{/each}}
+
+      </tr>
+    </tbody>
+  </table>
+  {{!-- <ul>
+
+    {{#each products}}
+    <li>{{this.title}}</li>
+    <li>{{this.thumbnail}}</li>
+    <li>{{this.price}}</li>
+
+
+
+    {{/each}}
+  </ul> --}}
+
+</div>
