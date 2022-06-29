@@ -10,7 +10,7 @@ buttonComprar.addEventListener('click', async e => {
   e.preventDefault()
   checkout()
 })
-async function checkout () {}
+
 async function renderProductTable () {
   const productsResponse = await fetch(`http://localhost:8080/api/products`)
   const products = await productsResponse.json()
@@ -97,13 +97,29 @@ async function deleteProductById (id) {
   infoModal.show()
 }
 async function checkout () {
-  const cartResponse = await fetch(`http://localhost:8080/api/carts/checkout`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
+  try {
+    loadingModal.show()
+
+    const cartResponse = await fetch(
+      `http://localhost:8080/api/carts/checkout`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    const cart = await cartResponse.json()
+    textModal.textContent = cart.message
+    if (cartResponse.status == 200) {
+      await renderTables()
     }
-  })
-  const data = await cartResponse.json()
+
+    infoModal.show()
+  } catch (error) {
+    textModal.textContent = error.message
+    console.log(error)
+  }
 }
 renderTables()
 

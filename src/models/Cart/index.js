@@ -36,9 +36,9 @@ class Cart {
     try {
       const prod = await Products.getProductById(idProduct)
       const { id: idProd, name, desc, price, stock } = prod
-      /*  if (stock < 0) {
+      if (stock < 0) {
         throw new Error('No hay suficientes productos')
-      } */
+      }
       const prodCart = await this.getContentOfCart(id)
       const findIndex = prodCart.findIndex(element => element.id == idProduct)
       if (findIndex > -1) {

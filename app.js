@@ -1,7 +1,9 @@
+const dotenv = require('dotenv')
+dotenv.config()
+
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-
 const path = require('path')
 const { configServer } = require('./config/initServer').exp
 configServer()
@@ -14,9 +16,12 @@ const session = require('express-session')
 const mongoStore = require('connect-mongo')
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 const logger = require('./logger/index')
-const { fakeUserMiddleware } = require('./src/middleware/index')
-const dotenv = require('dotenv')
-dotenv.config()
+const yarg = require('yargs/yargs')(process.argv.slice(2))
+
+const cluster = require('cluster')
+const MODE = yarg.argv.MODE
+console.log(MODE)
+
 const User = require('./src/models/User/index')
 
 const PORT = process.env.PORT || 8080
