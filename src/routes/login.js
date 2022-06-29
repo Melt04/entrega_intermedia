@@ -10,6 +10,12 @@ router.get('/faillogin', (req, res) => {
 router.get('/failregister', (req, res) => {
   res.render('error.hbs', { error: 'REGISTER' })
 })
+router.get('/', (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return res.render('public', { user: req.user.username })
+  }
+  return res.redirect('login')
+})
 router.get('/register', (req, res) => {
   if (req.isAuthenticated()) {
     return res.render('public', { user: req.user.username })
