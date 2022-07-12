@@ -1,4 +1,4 @@
-const Cart = require('../models/Cart/index')
+const Cart = require('../Repository/Cart/index')
 const sendMail = require('../../nodemailer/index')
 const client = require('../../twilio/index')
 const { formatProductsToHtml } = require('../../helpers/index')

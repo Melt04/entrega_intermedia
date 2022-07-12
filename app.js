@@ -22,7 +22,7 @@ const cluster = require('cluster')
 const MODE = yarg.argv.MODE
 console.log(MODE)
 
-const User = require('./src/models/User/index')
+const User = require('./src/Repository/User/index')
 
 const PORT = process.env.PORT || 8080
 

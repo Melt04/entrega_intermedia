@@ -1,8 +1,12 @@
+const FactorySave = require('../../Factory/product')
 const DaoFileProduct = require('./DaoFileProduct')
 const DaoSqliteProduct = require('./DaoSqliteProduct')
 const DaoMongoProduct = require('./DaoMongoProduct')
-
 const persistencia = process.env.persistencia
+
+const Save = new FactorySave(persistencia)
+module.exports = Save
+/* 
 if (persistencia === 'mongo') {
     module.exports = new DaoMongoProduct()
 } else {
@@ -13,4 +17,4 @@ if (persistencia === 'mongo') {
         module.exports = new DaoFileProduct()
     }
 
-}
+} */

@@ -1,28 +1,28 @@
 const Products = require('../Products/index')
-const repository = require('../../daos/carrito/index')
+const daoCarrito = require('../../daos/carrito/index')
 
 class Cart {
   constructor () {
-    this.repository = repository
+    this.daoCarrito = daoCarrito
   }
   async createNewCart (data) {
-    return this.repository.insert(data)
+    return this.daoCarrito.insert(data)
   }
   async getByUserId (data) {
-    return this.repository.getByUserId(data)
+    return this.daoCarrito.getByUserId(data)
   }
 
   async getAllCarts () {
-    return this.repository.getAll()
+    return this.daoCarrito.getAll()
   }
   async deleteCartById (id) {
-    return this.repository.deleteByUserId(id.userId)
+    return this.daoCarrito.deleteByUserId(id.userId)
   }
 
   async getContentOfCart (id) {
     let products
     const { userId } = id
-    const cart = await this.repository.getByUserId(userId)
+    const cart = await this.daoCarrito.getByUserId(userId)
     if (typeof cart == 'undefined') return null
     if (cart.products.length > 0) {
       products = JSON.parse(cart.products)
@@ -48,7 +48,7 @@ class Cart {
         console.log('productoagregado', prodCart)
       }
       await Products.removeStock(1, idProduct)
-      return this.repository.updateByUserId(id.userId, {
+      return this.daoCarrito.updateByUserId(id.userId, {
         products: JSON.stringify(prodCart)
       })
     } catch (e) {
@@ -68,7 +68,7 @@ class Cart {
         }
       })
       await Products.addStock(qty, idProduct)
-      return this.repository.updateByUserId(id.userId, {
+      return this.daoCarrito.updateByUserId(id.userId, {
         products: JSON.stringify(newProductCart)
       })
     } catch (e) {

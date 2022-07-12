@@ -1,8 +1,8 @@
 const passport = require('passport')
 
-const Cart = require('../src/models/Cart/index')
+const Cart = require('../src/Repository/Cart/index')
 const LocalStrategy = require('passport-local').Strategy
-const User = require('../src/models/User')
+const User = require('../src/Repository/User')
 const {
   createHash,
   isValidPassword,
