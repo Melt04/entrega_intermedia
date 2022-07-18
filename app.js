@@ -18,6 +18,7 @@ const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 const logger = require('./logger/index')
 const yarg = require('yargs/yargs')(process.argv.slice(2))
 
+const test = require('./src/test/index')
 const cluster = require('cluster')
 const MODE = yarg.argv.MODE
 console.log(MODE)
@@ -97,6 +98,7 @@ app.listen(PORT, async () => {
       `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.vrmey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
     )
     console.log(`Escuchando en puerto ${PORT}`)
+    test()
   } catch (e) {
     console.log(e)
   }
