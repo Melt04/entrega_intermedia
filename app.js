@@ -92,6 +92,7 @@ app.use((err, req, res, next) => {
   const message = err.message
   res.status(status).send({ message })
 })
+module.exports = app
 app.listen(PORT, async () => {
   try {
     await mongoose.connect(
