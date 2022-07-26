@@ -23,7 +23,7 @@ getProductById = async (req, res, next) => {
 createProduct = async (req, res, next) => {
   const { product } = req.body
   try {
-    await Product.createProduct(product)
+    await Product.createProduct({ product })
     return res.json({ message: 'ok' })
   } catch (e) {
     next(new Error(e.message))
@@ -40,7 +40,7 @@ updateProductById = async (req, res, next) => {
   try {
     const { id } = req.params
     const { newProduct } = req.body
-    await Product.updateProductById(id, newProduct)
+    await Product.updateProductById({ id, newProduct })
 
     return res.send({ message: 'Se actualizo con Exito' })
   } catch (e) {

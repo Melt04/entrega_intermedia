@@ -17,11 +17,11 @@ const mongoStore = require('connect-mongo')
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 const logger = require('./logger/index')
 const yarg = require('yargs/yargs')(process.argv.slice(2))
-
+const { graphqlHTTP } = require('express-graphql')
 const test = require('./src/test/index')
 const cluster = require('cluster')
 const MODE = yarg.argv.MODE
-console.log(MODE)
+const { schema } = require('./src/schema')
 
 const User = require('./src/Repository/User/index')
 
@@ -66,6 +66,8 @@ app.use(passport.session())
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
 const client = require('./twilio/index')
+const { getAllProducts: getProducts } = require('./src/controllers/products')
+const Product = require('./src/Repository/Products/index')
 
 //twilio
 
@@ -73,7 +75,20 @@ const client = require('./twilio/index')
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
-console.log(path.join(__dirname, 'public'))
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    rootValue: {
+      getAllProducts: Product.getAllProducts.bind(Product),
+      getProductById: Product.getProductById.bind(Product),
+      deleteProductById: Product.deleteProductById.bind(Product),
+      updateProductById: Product.updateProductById.bind(Product),
+      createProduct: Product.createProduct.bind(Product)
+    },
+    graphiql: true
+  })
+)
 app.use('/', routerLogin)
 app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCart)

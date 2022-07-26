@@ -2,8 +2,12 @@ const { getMaxId } = require('../../../helpers/index')
 const ProductDTO = require('../../DTOs/Product/index')
 const daoProduct = require('../../daos/producto/index')
 class Products {
-  constructor () {
-    this.daoProduct = daoProduct
+  constructor (daoProduct) {
+    if (Products.instance == null) {
+      this.daoProduct = daoProduct
+      Products.instance = this
+    }
+    return Products.instance
   }
   async getAllProducts () {
     const allProducts = await this.daoProduct.getAll()
@@ -13,14 +17,17 @@ class Products {
     return dtoProducts
   }
   async getProductById (id) {
+    if (typeof id == 'object') {
+      id = id.id
+    }
     const product = await this.daoProduct.getById(id)
 
     return new ProductDTO(product)
   }
-  createProduct (product) {
+  createProduct ({ product }) {
     return this.daoProduct.insert(product)
   }
-  async updateProductById (id, newProduct) {
+  async updateProductById ({ id, newProduct }) {
     const updatedProduct = await this.daoProduct.updateById(id, newProduct)
 
     return new ProductDTO(updatedProduct)
@@ -48,7 +55,11 @@ class Products {
   }
 
   async deleteProductById (id) {
+    if (typeof id == 'object') {
+      id = id.id
+    }
+
     return this.daoProduct.deleteById(id)
   }
 }
-module.exports = new Products()
+module.exports = new Products(daoProduct)

@@ -19,7 +19,7 @@ const testAllProducts = async () => {
     const addProduct = await axios.post('http://localhost:8080/api/products', {
       product: product
     })
-    console.log(addProduct.data)
+
     const updateProduct = {
       name: 'Mochila',
       desc: 'Mochila',
