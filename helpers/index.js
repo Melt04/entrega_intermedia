@@ -7,12 +7,22 @@ getMaxId = array => {
   const maxId = array.length > 0 ? array[array.length - 1].id + 1 : 0
   return maxId
 }
-function isValidPassword (user, password) {
-  return bCrypt.compareSync(password, user.password)
+async function isValidPassword (user, password) {
+  try {
+    const match = await bCrypt.compare(password, user.password)
+    return match
+  } catch (error) {
+    return error.message
+  }
 }
 
-function createHash (password) {
-  return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)
+async function createHash (password) {
+  try {
+    const hashedPassword = await bCrypt.hash(password, bCrypt.genSaltSync(10))
+    return hashedPassword
+  } catch (error) {
+    return null
+  }
 }
 function formattoHtml (user) {
   const html = `<h1>Usuario Creado ${user.username} </h1>

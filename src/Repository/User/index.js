@@ -1,6 +1,7 @@
-const { getMaxId } = require('../../../helpers/index')
+const { getMaxId, isValidPassword } = require('../../../helpers/index')
 const UserDto = require('../../DTOs/User')
 const daoUser = require('../../daos/user/index')
+const { generateToken } = require('../../../jwt')
 
 class User {
   constructor (daoUser) {
@@ -22,7 +23,10 @@ class User {
       id = id.id
     }
     const user = await this.daoUser.getById(id)
-
+    return new daoUserUserDto(user)
+  }
+  async getUserByEmail (email) {
+    const userByEmail = await this.daoUser.getByField(email, 'email')
     return new daoUserUserDto(user)
   }
   createUser ({ user }) {
@@ -38,6 +42,21 @@ class User {
       id = id.id
     }
     return this.daoUser.deleteById(id)
+  }
+  async loginUser (email, password) {
+    try {
+      const [user] = await this.daoUser.getByField(email, 'email')
+      if (user) {
+        const match = await isValidPassword(user, password)
+        if (match) {
+          const token = await generateToken(user.email)
+          return token
+        }
+      } else {
+      }
+    } catch (error) {
+      return {}
+    }
   }
 }
 module.exports = new User(daoUser)

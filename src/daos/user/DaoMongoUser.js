@@ -6,7 +6,7 @@ const { isAdmin } = require('../../middleware')
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true, maxlength: 12 },
+  password: { type: String, required: true, maxlength: 100 },
   name: { type: String, required: true, maxlength: 80 },
   lastName: { type: String, required: true, maxlength: 80 },
   phone: { type: String, required: true, maxlength: 15 },

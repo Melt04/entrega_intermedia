@@ -10,6 +10,7 @@ const { router: routerCart } = require('./src/routes/cart')
 const { router: routerProduct } = require('./src/routes/products')
 const { router: routerLogin } = require('./src/routes/login')
 const { router: routerUser } = require('./src/routes/user')
+const { router: routerLoginJwt } = require('./src/routes/loginJwt')
 
 const { router: routerSession } = require('./src/routes/session')
 const passport = require('passport')
@@ -23,7 +24,10 @@ const test = require('./src/test/index')
 const cluster = require('cluster')
 const MODE = yarg.argv.MODE
 const { schema } = require('./src/schema')
+
 const User = require('./src/Repository/User/index')
+
+const { generateToken, validateToken } = require('./jwt/index')
 
 const PORT = process.env.PORT || 8080
 
@@ -67,6 +71,7 @@ app.set('view engine', 'hbs')
 
 const { getAllProducts: getProducts } = require('./src/controllers/products')
 const Product = require('./src/Repository/Products/index')
+const { createHash } = require('./helpers/index')
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -90,6 +95,7 @@ app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCart)
 app.use('/api/session', routerSession)
 app.use('/api/users', routerUser)
+app.use('/api/login/', routerLoginJwt)
 
 app.use('*', (req, res) => {
   const { method, path } = req
@@ -111,6 +117,7 @@ app.listen(PORT, async () => {
       `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.vrmey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
     )
     logger.info(`Escuchando en puerto ${PORT}`)
+    createHash('Adas')
     // TODO : REMOVE COMMENTARIOS
     /* test() */
   } catch (e) {

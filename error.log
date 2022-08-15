@@ -8,3 +8,13 @@
 {"level":"error","message":"FAIL"}
 {"level":"error","message":"Cannot create property 'Symbol(level)' on string 'Escuchando en puerto 8080'"}
 {"level":"error","message":"Cannot create property 'Symbol(level)' on string 'Escuchando en puerto'"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"The \"algorithm\" argument must be of type string. Received undefined"}
+{"level":"error","message":"Digest method not supported"}
+{"level":"error","message":"Digest method not supported"}

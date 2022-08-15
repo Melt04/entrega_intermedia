@@ -64,6 +64,15 @@ class MongoContainer {
       throw new Error(e.message)
     }
   }
+  async getByField (value, field) {
+    try {
+      const query = { [field]: value }
+      const data = await this.model.find(query)
+      return data
+    } catch (error) {
+      throw new Error(e.message)
+    }
+  }
   async deleteAll () {
     try {
       await this.model.deleteMany({})

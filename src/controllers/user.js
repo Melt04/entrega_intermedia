@@ -1,3 +1,5 @@
+const { createHash } = require('../../helpers')
+const { generateToken } = require('../../jwt')
 const User = require('../Repository/User/index')
 
 getAllUsers = async (req, res, next) => {
@@ -21,12 +23,18 @@ getUserById = async (req, res, next) => {
   }
 }
 createUser = async (req, res, next) => {
-  const { user } = req.body
-
+  let { user } = req.body
+  const password = await createHash(user.password)
+  if (!password) {
+    return next(new Error('Error while hasing password'))
+  }
+  user = { ...user, password }
   try {
     await User.createUser({ user })
-    //TODO: Devolver token
-    return res.json({ message: 'ok' })
+    const { id, email } = user
+    const token = await generateToken(email)
+
+    return res.json({ token })
   } catch (e) {
     next(new Error(e.message))
   }
@@ -49,11 +57,20 @@ updateUserById = async (req, res, next) => {
     next(new Error(e.message))
   }
 }
+loginUser = async (req, res, next) => {
+  const { email, password } = req.body
+  const token = await User.loginUser(email, password)
+  if (token) {
+    return res.send({ token })
+  }
+  return res.status(400).send({ message: 'User Not Found' })
+}
 
 module.exports = {
   getAllUsers,
   getUserById,
   createUser,
+  loginUser,
   deleteUserById,
   updateUserById
 }
