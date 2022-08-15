@@ -23,11 +23,10 @@ class SqliteContainer {
   }
   async getByUserId (userId) {
     try {
-      console.log(userId)
       const [data] = await this.db(this.table)
         .select('*')
         .where('userId', '=', userId)
-      console.log(data)
+
       return data
     } catch (e) {
       throw new Error(e.message)

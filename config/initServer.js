@@ -4,6 +4,7 @@ const exp = {}
 
 configServer = async () => {
   process.env.persistencia = config.persistencia
+  //TODO : Cambiar configuracion mongo local y nube
   /*  if (config.persistencia == 'mongo') {
     try {
       await connectDbMongo()
@@ -11,6 +12,7 @@ configServer = async () => {
       throw new Error(e.message)
     }
   } */
+
   if (config.persistencia == 'sqlite') {
     const knexInstance = connectDbSqlite()
     exp.knexInstance = knexInstance

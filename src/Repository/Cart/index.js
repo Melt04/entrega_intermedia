@@ -29,7 +29,7 @@ class Cart {
     } else {
       products = JSON.parse(cart.products)
     }
-    console.log('retorna productos', products)
+
     return products
   }
   async addProductToCart (id, idProduct) {
@@ -45,7 +45,6 @@ class Cart {
         prodCart[findIndex].q++
       } else {
         prodCart.push({ id: idProd, name, desc, price, q: 1 })
-        console.log('productoagregado', prodCart)
       }
       await Products.removeStock(1, idProduct)
       return this.daoCarrito.updateByUserId(id.userId, {

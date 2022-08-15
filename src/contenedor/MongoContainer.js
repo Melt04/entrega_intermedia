@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const logger = require('../../logger')
 
 class MongoContainer {
   constructor (model) {
@@ -6,7 +7,7 @@ class MongoContainer {
   }
   static async connect () {
     try {
-      console.log('connene')
+      logger.log('connene')
       await mongoose.connect(process.env.urlMongo)
       return true
     } catch (e) {

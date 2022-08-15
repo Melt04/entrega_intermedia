@@ -3,3 +3,8 @@
 {"level":"error","message":"Error in SignUp MongooseError: Operation `users.findOne()` buffering timed out after 10000ms"}
 {"level":"error","message":"Error in SignUp MongooseError: Operation `users.findOne()` buffering timed out after 10000ms"}
 {"level":"error","message":"Error saving avatar Error: EEXIST: file already exists, mkdir 'D:\\dev\\coderhouse\\entrega_intermedia\\public\\uploads\\alan@alan'"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error","message":"FAIL"}
+{"level":"error","message":"Cannot create property 'Symbol(level)' on string 'Escuchando en puerto 8080'"}
+{"level":"error","message":"Cannot create property 'Symbol(level)' on string 'Escuchando en puerto'"}

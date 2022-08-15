@@ -12,7 +12,6 @@ class FactorySave {
       return new DaoMongoCart()
     } else {
       if (data === 'sqlite') {
-        console.log('HERE')
         return new DaoSqliteCart()
       } else {
         return new DaoFileCart()

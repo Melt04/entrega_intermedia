@@ -1,4 +1,5 @@
 const express = require('express')
+const logger = require('../../logger')
 const router = express.Router()
 router.post('/', (req, res) => {
   return res.redirect('/products')
@@ -10,8 +11,8 @@ router.post('/logout', (req, res) => {
     if (err) {
       throw new Error(err)
     }
-    console.log('SESSION', req.session)
-    console.log('destroy')
+
+    logger.info('Session close')
     return res.render('logout', { user: name })
   })
 })

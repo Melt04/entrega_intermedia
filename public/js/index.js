@@ -70,7 +70,7 @@ async function addProductToCart (idProd) {
     }
   } catch (error) {
     textModal.textContent = error.message
-    console.log(error)
+    logger.error(error.message)
   }
   infoModal.show()
 }
@@ -92,7 +92,7 @@ async function deleteProductById (id) {
     }
   } catch (error) {
     textModal.textContent = error.message
-    console.log(error)
+    logger.error(error.message)
   }
   infoModal.show()
 }
@@ -118,7 +118,7 @@ async function checkout () {
     infoModal.show()
   } catch (error) {
     textModal.textContent = error.message
-    console.log(error)
+    logger.error(error.message)
   }
 }
 renderTables()

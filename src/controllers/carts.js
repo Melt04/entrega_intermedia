@@ -2,6 +2,7 @@ const Cart = require('../Repository/Cart/index')
 const sendMail = require('../../nodemailer/index')
 const client = require('../../twilio/index')
 const { formatProductsToHtml } = require('../../helpers/index')
+const logger = require('../../logger')
 
 createNewCart = async (_, res, next) => {
   try {
@@ -42,7 +43,7 @@ deleteCartById = async (req, res, next) => {
         from: 'whatsapp:+14155238886',
         to: 'whatsapp:+5492235917701'
       })
-      .then(message => console.log(message.sid))
+
       .done()
 
     try {
@@ -51,9 +52,8 @@ deleteCartById = async (req, res, next) => {
         from: '+16018736631',
         to: `+${req.user.telnumber}`
       })
-      console.log(message)
     } catch (e) {
-      console.log(e)
+      logger.error(e.message)
     }
 
     const mail = await sendMail(mailOptions)
@@ -66,7 +66,7 @@ deleteCartById = async (req, res, next) => {
 
 addProductToCart = async (req, res, next) => {
   const cartId = await Cart.getByUserId(req.user.id)
-  console.log(req.body)
+
   const { idProd } = req.body
   try {
     await Cart.addProductToCart(cartId, idProd)

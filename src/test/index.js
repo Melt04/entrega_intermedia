@@ -1,13 +1,13 @@
 const axios = require('axios')
+const logger = require('../../logger/index')
 const { getAllProducts } = require('../Repository/Products/index')
 
 //Lectura de productos
 
 const testAllProducts = async () => {
   try {
-    console.log('*********Pruebas Manuales**********')
     const allProducts = await axios.get('http://localhost:8080/api/products')
-    console.log(allProducts.data)
+    logger.info(allProducts.data)
     const product = {
       name: 'Mochila',
       desc: 'Mochila',
@@ -34,14 +34,14 @@ const testAllProducts = async () => {
         newProduct: updateProduct
       }
     )
-    console.log(updatedProduct.data)
+    logger.log(JSON.stringify(updatedProduct.data, null, 2))
     const deletedProduct = await axios.delete(
       `http://localhost:8080/api/products/3`
     )
-    console.log(deletedProduct.data)
-    console.log('*********Pruebas Manuales**********')
+    logger.info(deletedProduct.data)
+    logger.info('*********Pruebas Manuales**********')
   } catch (error) {
-    console.log(error)
+    logger.info(error)
   }
 }
 

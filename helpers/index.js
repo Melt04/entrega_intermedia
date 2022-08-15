@@ -34,7 +34,7 @@ function formatProductsToHtml (product) {
     <p>Cantidad : ${product.q}</p>`
     html = html + body
   })
-  console.log('HTML ', html)
+
   return html
 }
 module.exports = {

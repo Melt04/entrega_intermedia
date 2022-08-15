@@ -83,7 +83,7 @@ const signUpStrategy = new LocalStrategy(
 const loginStrategy = new LocalStrategy((username, password, done) => {
   User.findOne({ username }, (err, user) => {
     if (err) {
-      console.log(err)
+      logger.error(err.message)
       return done(err)
     }
 

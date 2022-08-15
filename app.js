@@ -1,6 +1,5 @@
 const dotenv = require('dotenv')
 dotenv.config()
-
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -10,6 +9,8 @@ configServer()
 const { router: routerCart } = require('./src/routes/cart')
 const { router: routerProduct } = require('./src/routes/products')
 const { router: routerLogin } = require('./src/routes/login')
+const { router: routerUser } = require('./src/routes/user')
+
 const { router: routerSession } = require('./src/routes/session')
 const passport = require('passport')
 const session = require('express-session')
@@ -22,7 +23,6 @@ const test = require('./src/test/index')
 const cluster = require('cluster')
 const MODE = yarg.argv.MODE
 const { schema } = require('./src/schema')
-
 const User = require('./src/Repository/User/index')
 
 const PORT = process.env.PORT || 8080
@@ -41,6 +41,7 @@ passport.deserializeUser((id, done) => {
   })
 })
 
+//TODO : Cambiar url, tiene que tomar segun el ambiente: Dev es local, Prod es nube
 app.use(
   session({
     store: mongoStore.create({
@@ -60,18 +61,13 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-//
-
 // Views
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
-const client = require('./twilio/index')
+
 const { getAllProducts: getProducts } = require('./src/controllers/products')
 const Product = require('./src/Repository/Products/index')
 
-//twilio
-
-//
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
@@ -93,6 +89,7 @@ app.use('/', routerLogin)
 app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCart)
 app.use('/api/session', routerSession)
+app.use('/api/users', routerUser)
 
 app.use('*', (req, res) => {
   const { method, path } = req
@@ -113,9 +110,10 @@ app.listen(PORT, async () => {
     await mongoose.connect(
       `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.vrmey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
     )
-    console.log(`Escuchando en puerto ${PORT}`)
-    test()
+    logger.info(`Escuchando en puerto ${PORT}`)
+    // TODO : REMOVE COMMENTARIOS
+    /* test() */
   } catch (e) {
-    console.log(e)
+    logger.error(e.message)
   }
 })

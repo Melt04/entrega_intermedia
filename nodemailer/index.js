@@ -1,4 +1,5 @@
 const { options } = require('yargs')
+const logger = require('../logger')
 
 const createTransport = require('nodemailer').createTransport
 
@@ -17,10 +18,9 @@ module.exports = async function sendMail (mailOptions) {
       to: process.env.TEST_MAIL,
       ...mailOptions
     }
-    console.log(options)
+
     const info = await transport.sendMail(options)
-    console.log(info)
   } catch (error) {
-    console.log(error)
+    logger.error(error.message)
   }
 }
