@@ -21,15 +21,17 @@ class Products {
       id = id.id
     }
     const product = await this.daoProduct.getById(id)
-
-    return new ProductDTO(product)
+    console.log(product)
+    if (product) {
+      return new ProductDTO(product)
+    }
+    return product
   }
   createProduct ({ product }) {
     return this.daoProduct.insert(product)
   }
   async updateProductById ({ id, newProduct }) {
     const updatedProduct = await this.daoProduct.updateById(id, newProduct)
-
     return new ProductDTO(updatedProduct)
   }
   async addStock (num, id) {
@@ -58,8 +60,9 @@ class Products {
     if (typeof id == 'object') {
       id = id.id
     }
+    const deletedProduct = await this.daoProduct.deleteById(id)
 
-    return this.daoProduct.deleteById(id)
+    return deletedProduct
   }
 }
 module.exports = new Products(daoProduct)

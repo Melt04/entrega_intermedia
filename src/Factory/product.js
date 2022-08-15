@@ -1,20 +1,16 @@
-/* const DaoFileCart = require('./DaoFileCart')
- 
-const DaoMongoCart = require('./DaoMongoCart')
-const DaoSqliteCart = require('./DaoSqliteCart') */
-const DaoFileCart = require('../daos/carrito/DaoFileCart')
-const DaoMongoCart = require('../daos/carrito/DaoMongoCart')
-const DaoSqliteCart = require('../daos/producto/DaoSqliteProduct')
+const DaoFileProduct = require('../daos/producto/DaoFileProduct')
+const DaoMongoProduct = require('../daos/producto/DaoMongoProduct')
+const DaoSqliteProduct = require('../daos/producto/DaoSqliteProduct')
 
 class FactorySave {
   createProduct (data) {
     if (data === 'mongo') {
-      return new DaoMongoCart()
+      return new DaoMongoProduct()
     } else {
       if (data === 'sqlite') {
-        return new DaoSqliteCart()
+        return new DaoSqliteProduct()
       } else {
-        return new DaoFileCart()
+        return new DaoFileProduct()
       }
     }
   }
