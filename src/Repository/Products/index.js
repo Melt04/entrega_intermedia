@@ -1,6 +1,6 @@
 const { getMaxId } = require('../../../helpers/index')
 const ProductDTO = require('../../DTOs/Product/index')
-const daoProduct = require('../../daos/producto/index')
+const daoProduct = require('../../daos/products/index')
 class Products {
   constructor (daoProduct) {
     if (Products.instance == null) {

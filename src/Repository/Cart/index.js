@@ -1,5 +1,5 @@
 const Products = require('../Products/index')
-const daoCarrito = require('../../daos/carrito/index')
+const daoCarrito = require('../../daos/cart/index')
 
 class Cart {
   constructor () {

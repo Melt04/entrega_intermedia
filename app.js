@@ -11,6 +11,7 @@ const { router: routerProduct } = require('./src/routes/products')
 const { router: routerLogin } = require('./src/routes/login')
 const { router: routerUser } = require('./src/routes/user')
 const { router: routerLoginJwt } = require('./src/routes/loginJwt')
+const { router: routerOrder } = require('./src/routes/order')
 
 const { router: routerSession } = require('./src/routes/session')
 const passport = require('passport')
@@ -96,6 +97,7 @@ app.use('/api/shoppingcartproducts', routerCart)
 app.use('/api/session', routerSession)
 app.use('/api/users', routerUser)
 app.use('/api/login/', routerLoginJwt)
+app.use('/api/orders/', routerOrder)
 
 app.use('*', (req, res) => {
   const { method, path } = req

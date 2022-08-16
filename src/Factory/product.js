@@ -1,6 +1,6 @@
-const DaoFileProduct = require('../daos/producto/DaoFileProduct')
-const DaoMongoProduct = require('../daos/producto/DaoMongoProduct')
-const DaoSqliteProduct = require('../daos/producto/DaoSqliteProduct')
+const DaoFileProduct = require('../daos/products/DaoFileProduct')
+const DaoMongoProduct = require('../daos/products/DaoMongoProduct')
+const DaoSqliteProduct = require('../daos/products/DaoSqliteProduct')
 
 class FactorySave {
   createProduct (data) {
