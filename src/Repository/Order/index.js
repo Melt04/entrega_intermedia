@@ -32,6 +32,9 @@ class Orders {
         }
         const orderSaveDto = new OrderSaveDto(order)
         const savedOrder = await this.daoOrder.insert(orderSaveDto)
+        await Cart.daoCarrito.updateByField('owner', cartOwner, {
+          products: JSON.stringify([])
+        })
 
         return true
       } else return false

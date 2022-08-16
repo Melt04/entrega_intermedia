@@ -56,6 +56,7 @@ class Cart {
       throw new Error(e.message)
     }
   }
+
   async deleteProductFromCart (email, idProduct) {
     try {
       const prodCart = await this.getContentOfCart(email)
