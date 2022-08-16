@@ -10,15 +10,13 @@ const {
 const {
   isAdmin,
   validateCreateProduct,
-  validateUpdateProduct
+
+  isLogged
 } = require('../middleware/index')
 router.get('/', getAllProducts)
 router.get('/:id', getProductById)
-router.post('/', /*  isAdmin ,*/ /* validateCreateProduct,  */ createProduct)
-router.delete('/:id', /* isAdmin, */ deleteProductById)
-router.put(
-  '/:id',
-  /* isAdmin, */ /* validateUpdateProduct, */ updateProductById
-)
+router.post('/', isLogged, isAdmin, validateCreateProduct, createProduct)
+router.delete('/:id', isLogged, isAdmin, deleteProductById)
+router.put('/:id', isLogged, isAdmin, updateProductById)
 
 module.exports = { router }

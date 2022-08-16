@@ -2,6 +2,7 @@ const { getMaxId, isValidPassword } = require('../../../helpers/index')
 const UserDto = require('../../DTOs/User')
 const daoUser = require('../../daos/user/index')
 const { generateToken } = require('../../../jwt')
+const logger = require('../../../logger')
 
 class User {
   constructor (daoUser) {
@@ -42,6 +43,15 @@ class User {
       id = id.id
     }
     return this.daoUser.deleteById(id)
+  }
+  async isUserAdmin (email) {
+    try {
+      const [user] = await this.daoUser.getByField(email, 'email')
+      return user.isAdmin
+    } catch (error) {
+      logger.error(error.message)
+      return false
+    }
   }
   async loginUser (email, password) {
     try {

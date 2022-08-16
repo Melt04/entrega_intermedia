@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const { boolean } = require('yargs')
-
 const MongoContainer = require('../../contenedor/MongoContainer')
-const { isAdmin } = require('../../middleware')
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },

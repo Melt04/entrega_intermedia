@@ -1,3 +1,4 @@
+const User = require('../Repository/User/index')
 const { validateToken } = require('../../jwt')
 
 const fakeUser = require('../../apiData/index').userInfo()
@@ -5,12 +6,15 @@ fakeUserMiddleware = (req, res, next) => {
   req.user = fakeUser
   next()
 }
-isAdmin = (req, res, next) => {
-  const { isAdmin } = req.user
-  if (isAdmin) return next()
-  const error = new Error('No autorizado')
-  error.status = 401
-  next(error)
+isAdmin = async (req, res, next) => {
+  const { email } = req.user
+  try {
+    const userAdmin = await User.isUserAdmin(email)
+    if (userAdmin) return next()
+    const error = new Error('No autorizado')
+    error.status = 401
+    next(error)
+  } catch (error) {}
 }
 const fieldsProduct = ['name', 'desc', 'code', 'urlPhoto', 'price', 'stock']
 const FIELD_LENGTH = fieldsProduct.length
