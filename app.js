@@ -92,7 +92,7 @@ app.use(
 )
 app.use('/', routerLogin)
 app.use('/api/products', routerProduct)
-app.use('/api/carts', routerCart)
+app.use('/api/shoppingcartproducts', routerCart)
 app.use('/api/session', routerSession)
 app.use('/api/users', routerUser)
 app.use('/api/login/', routerLoginJwt)

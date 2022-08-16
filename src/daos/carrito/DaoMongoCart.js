@@ -1,21 +1,22 @@
 const mongoose = require('mongoose')
 const MongoContainer = require('../../contenedor/MongoContainer')
+
 const cartSchema = new mongoose.Schema({
-  products: { type: String, required: true },
+  owner: { type: String, require: true },
+  products: { type: String, required: true }
 })
 cartSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
+  return this._id.toHexString()
+})
 
 // Ensure virtual fields are serialised.
 cartSchema.set('toJSON', {
   virtuals: true
-});
+})
 const cartModel = mongoose.model('Cart', cartSchema)
 
-
 class DaoMongoCart extends MongoContainer {
-  constructor() {
+  constructor () {
     super(cartModel)
   }
 }

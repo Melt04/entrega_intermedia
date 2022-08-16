@@ -1,3 +1,5 @@
+const { validateToken } = require('../../jwt')
+
 const fakeUser = require('../../apiData/index').userInfo()
 fakeUserMiddleware = (req, res, next) => {
   req.user = fakeUser
@@ -20,7 +22,8 @@ validateId = (req, res, next) => {
   res.status(400).json({ error: 'Formato id invalido' })
 }
 validateCreateProduct = (req, res, next) => {
-  if (!req.body.product) return res.status(400).json({ error: 'Error en los campos del producto' })
+  if (!req.body.product)
+    return res.status(400).json({ error: 'Error en los campos del producto' })
   fields = Object.keys(req.body.product)
   if (fields.length > FIELD_LENGTH) {
     return res.status(400).json({ error: 'Error en los campos del producto' })
@@ -32,8 +35,25 @@ validateCreateProduct = (req, res, next) => {
   }
   next()
 }
+isLogged = async (req, res, next) => {
+  const headers = req.headers.authorization
+  if (headers) {
+    const token = headers.split(' ')[1]
+    if (token != 'null') {
+      try {
+        const isValid = await validateToken(token)
+        req.user = { email: isValid.email }
+        return next()
+      } catch (error) {
+        return res.status(409).send({ message: 'User not logged in' })
+      }
+    }
+  }
+  return res.status(409).send({ message: 'User not logged in' })
+}
 validateUpdateProduct = (req, res, next) => {
-  if (!req.body.newProduct) return res.status(400).json({ error: 'Error en los campos del producto' })
+  if (!req.body.newProduct)
+    return res.status(400).json({ error: 'Error en los campos del producto' })
   fields = Object.keys(req.body.newProduct)
 
   if (fields.length === 0 || fields.length > FIELD_LENGTH) {
@@ -47,4 +67,11 @@ validateUpdateProduct = (req, res, next) => {
   next()
 }
 
-module.exports = { validateId, validateCreateProduct, validateUpdateProduct, fakeUserMiddleware, isAdmin }
+module.exports = {
+  validateId,
+  validateCreateProduct,
+  validateUpdateProduct,
+  fakeUserMiddleware,
+  isAdmin,
+  isLogged
+}

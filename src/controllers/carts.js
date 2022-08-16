@@ -76,9 +76,9 @@ addProductToCart = async (req, res, next) => {
   }
 }
 getProductsFromCart = async (req, res, next) => {
-  const { id } = req.user
-  const data = { userId: id }
-  const content = await Cart.getContentOfCart(data)
+  const { email } = req.user
+
+  const content = await Cart.getContentOfCart(email)
   if (content) {
     return res.send(content)
   }

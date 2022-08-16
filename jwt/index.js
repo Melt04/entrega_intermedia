@@ -12,11 +12,13 @@ function generateToken (email) {
   })
 }
 function validateToken (token) {
-  jwt.verify(token, privateKey, (error, token) => {
-    if (!error) {
-      return token
-    }
-    return error
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, privateKey, (error, token) => {
+      if (!error) {
+        return resolve(token)
+      }
+      return reject(error)
+    })
   })
 }
 

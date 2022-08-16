@@ -1,5 +1,6 @@
 const { createHash } = require('../../helpers')
 const { generateToken } = require('../../jwt')
+const Cart = require('../Repository/Cart/index')
 const User = require('../Repository/User/index')
 
 getAllUsers = async (req, res, next) => {
@@ -33,7 +34,9 @@ createUser = async (req, res, next) => {
     await User.createUser({ user })
     const { id, email } = user
     const token = await generateToken(email)
-
+    const products = JSON.stringify([])
+    const newCart = { owner: email, products }
+    Cart.createNewCart(newCart)
     return res.json({ token })
   } catch (e) {
     next(new Error(e.message))

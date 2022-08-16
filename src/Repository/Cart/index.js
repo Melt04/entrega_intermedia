@@ -19,10 +19,10 @@ class Cart {
     return this.daoCarrito.deleteByUserId(id.userId)
   }
 
-  async getContentOfCart (id) {
+  async getContentOfCart (email) {
     let products
-    const { userId } = id
-    const cart = await this.daoCarrito.getByUserId(userId)
+    const [cart] = await this.daoCarrito.getByField(email, 'owner')
+    console.log(cart)
     if (typeof cart == 'undefined') return null
     if (cart.products.length > 0) {
       products = JSON.parse(cart.products)
