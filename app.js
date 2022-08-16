@@ -46,11 +46,17 @@ passport.deserializeUser((id, done) => {
   })
 })
 
-//TODO : Cambiar url, tiene que tomar segun el ambiente: Dev es local, Prod es nube
+if (process.env.NODE_ENV == 'prod') {
+  url = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.vrmey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+} else {
+  url = `mongodb://localhost:27017/testin`
+}
+
 app.use(
   session({
     store: mongoStore.create({
-      mongoUrl: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.vrmey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+      /* mongoUrl: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.vrmey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, */
+      mongoUrl: url,
       mongoOptions: mongoOptions
     }),
     secret: 'my secret',
@@ -115,13 +121,7 @@ app.use((err, req, res, next) => {
 module.exports = app
 app.listen(PORT, async () => {
   try {
-    await mongoose.connect(
-      `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.vrmey.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
-    )
-    logger.info(`Escuchando en puerto ${PORT}`)
-    createHash('Adas')
-    // TODO : REMOVE COMMENTARIOS
-    /* test() */
+    await mongoose.connect(url)
   } catch (e) {
     logger.error(e.message)
   }
