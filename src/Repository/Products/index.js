@@ -21,7 +21,7 @@ class Products {
       id = id.id
     }
     const product = await this.daoProduct.getById(id)
-    console.log(product)
+
     if (product) {
       return product
     }

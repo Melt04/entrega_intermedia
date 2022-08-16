@@ -86,9 +86,9 @@ getProductsFromCart = async (req, res, next) => {
 }
 deleteProductsFromCart = async (req, res, next) => {
   try {
-    const data = { userId: req.user.id }
+    const cartOwner = req.user.email
     const { idProd } = req.params
-    await Cart.deleteProductFromCart(data, idProd)
+    await Cart.deleteProductFromCart(cartOwner, idProd)
     return res.send({ message: 'Producto borrado' })
   } catch (e) {
     const error = new Error('No se pudo borrar el producto del carrito')

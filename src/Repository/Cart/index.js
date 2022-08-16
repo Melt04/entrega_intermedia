@@ -56,20 +56,26 @@ class Cart {
       throw new Error(e.message)
     }
   }
-  async deleteProductFromCart (id, idProduct) {
+  async deleteProductFromCart (email, idProduct) {
     try {
-      const prodCart = await this.getContentOfCart(id)
-      let qty
+      const prodCart = await this.getContentOfCart(email)
+      let find = false
       const newProductCart = prodCart.filter(element => {
         if (element !== null) {
           if (element.id == idProduct) {
-            qty = element.q
+            element.q--
+            find = true
+            if (element.q > 0) {
+              return true
+            }
           }
           return element.id != idProduct
         }
       })
-      await Products.addStock(qty, idProduct)
-      return this.daoCarrito.updateByUserId(id.userId, {
+      if (find) {
+        await Products.addStock(1, idProduct)
+      }
+      return this.daoCarrito.updateByField('owner', email, {
         products: JSON.stringify(newProductCart)
       })
     } catch (e) {

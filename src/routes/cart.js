@@ -13,10 +13,10 @@ const {
 } = require('../controllers/carts')
 
 router.post('/', isLogged, addProductToCart)
-router.delete('/checkout', deleteCartById)
+/* router.delete('/checkout', deleteCartById) */
 /* router.get('/products', getProductsFromCart) */
 /* router.post('/products', addProductToCart) */
-router.delete('/products/:idProd', deleteProductsFromCart)
+router.delete('/:idProd', isLogged, deleteProductsFromCart)
 router.get('/', isLogged, getProductsFromCart)
 
 module.exports = { router }
