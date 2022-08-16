@@ -55,6 +55,20 @@ class MongoContainer {
       throw new Error(e.message)
     }
   }
+  async updateByField (field, fieldValue, newData) {
+    try {
+      const data = await this.model.findOneAndUpdate(
+        { [field]: fieldValue },
+        newData,
+        {
+          upsert: true
+        }
+      )
+      return data
+    } catch (e) {
+      throw new Error(e.message)
+    }
+  }
   async getByUserId (userId) {
     try {
       const data = await this.model.find({ userId })

@@ -23,7 +23,7 @@ class Products {
     const product = await this.daoProduct.getById(id)
     console.log(product)
     if (product) {
-      return new ProductDTO(product)
+      return product
     }
     return product
   }
@@ -53,7 +53,7 @@ class Products {
     } else {
       stock = product.stock
     }
-    this.daoProduct.updateById(id, { stock: stock - num })
+    await this.daoProduct.updateById(id, { stock: stock - num })
   }
 
   async deleteProductById (id) {

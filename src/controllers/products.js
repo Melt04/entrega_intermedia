@@ -1,3 +1,4 @@
+const ProductDTO = require('../DTOs/Product')
 const Product = require('../Repository/Products/index')
 
 getAllProducts = async (req, res, next) => {
@@ -14,7 +15,8 @@ getProductById = async (req, res, next) => {
     const product = await Product.getProductById(id)
 
     if (product) {
-      return res.json(product)
+      const productDto = new ProductDTO(product)
+      return res.json(productDto)
     }
     return res.json({ message: 'No se encontro el producto' })
   } catch (e) {

@@ -12,10 +12,10 @@ const {
   testCart
 } = require('../controllers/carts')
 
-router.post('/', createNewCart)
+router.post('/', isLogged, addProductToCart)
 router.delete('/checkout', deleteCartById)
 /* router.get('/products', getProductsFromCart) */
-router.post('/products', addProductToCart)
+/* router.post('/products', addProductToCart) */
 router.delete('/products/:idProd', deleteProductsFromCart)
 router.get('/', isLogged, getProductsFromCart)
 

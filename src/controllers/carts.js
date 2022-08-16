@@ -65,11 +65,10 @@ deleteCartById = async (req, res, next) => {
 }
 
 addProductToCart = async (req, res, next) => {
-  const cartId = await Cart.getByUserId(req.user.id)
-
+  const cartOwner = req.user.email
   const { idProd } = req.body
   try {
-    await Cart.addProductToCart(cartId, idProd)
+    await Cart.addProductToCart(cartOwner, idProd)
     res.json({ message: 'Producto agregado' })
   } catch (e) {
     next(new Error(e.message))
